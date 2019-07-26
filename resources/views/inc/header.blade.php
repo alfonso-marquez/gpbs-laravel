@@ -1,10 +1,10 @@
 <section class="header">
 	<div class="header__bg">
-		<picture> <source src="" type=""> <img src="/images/headerBg.jpg"></picture>
+		<picture> <source srcset="" type=""> <img src="/images/headerBg.jpg"></picture>
 	</div>
 	<div class="header__content">
 		<div class="header__logo">
-			<picture> <source src="" type=""> <img src="/images/gpbsLogo.png"></picture>
+			<picture> <source srcset="" type=""> <img src="/images/gpbsLogo.png"></picture>
 		</div>
 	<div class="header__text-content">
 		<h2>Global Precast Building Solutions, Inc.</h2>

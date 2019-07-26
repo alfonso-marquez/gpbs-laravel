@@ -20,6 +20,7 @@
 
 @include('inc.about')
 @include('inc.products')
+@include('inc.portfolio')
 
 @section('sidebar')
 

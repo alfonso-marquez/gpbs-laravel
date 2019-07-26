@@ -31,18 +31,18 @@
 			margin-bottom: 20px;
 		}
 		.title {
-			font-size: 25px;
+			font-size: 20px;
 			margin-bottom: 20px;
 		}
 		.main {
 			text-transform: uppercase;
-			font-size: 20px;
+			font-size: 35px;
 			margin-bottom: 10px;
 			font-weight: 800;
 		}
 		.sub  {
 			text-transform: capitalize;
-			font-size: 15px;
+			font-size: 25px;
 		}
 
 	</style>
@@ -51,7 +51,7 @@
 	<div class="container">
 
 		<div class="logo">
-			<img style="height: 25vh;" src="/images/gpbsLogo.png">
+			<img style="height: 20vh;" src="/images/gpbsLogo.png">
 		</div>
 		<div class="content">
 			<div style="font-family: Michroma !important;"  class="title">Global Precast Building Solutions, Inc.</div>
