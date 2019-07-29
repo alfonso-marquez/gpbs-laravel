@@ -1,0 +1,360 @@
+// Rem output with px fallback
+@mixin font-size($sizeValue: 1) {
+	font-size: ($sizeValue * 16) * 1px;
+	font-size: $sizeValue * 1rem;
+}
+
+// Center block
+@mixin center-block {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+// Clearfix
+@mixin clearfix() {
+	content: "";
+	display: table;
+	table-layout: fixed;
+}
+
+// Clear after (not all clearfix need this also)
+@mixin clearfix-after() {
+	clear: both;
+}
+
+// Column width with margin
+@mixin column-width($numberColumns: 3) {
+	width: map-get($columns, $numberColumns) - (($columns__margin * ($numberColumns - 1)) / $numberColumns);
+}
+
+// Transition mixin
+// Usage:  @include transition(all,2s,ease-out);
+@mixin transition($what: all, $time: 0.2s, $how: ease-in-out) {
+	transition: $what $time $how;
+}
+
+
+/* Font helper mixins */
+//-----------------------------------------------------------------------
+//  FONT HELPER
+//  usage:
+//    @include NoeText(bold);
+//-----------------------------------------------------------------------
+@mixin NoeText($font-type: 'regular') {
+	@if $font-type=='italic' {
+		font-family: "NoeTextItalic", serif;
+	}
+
+	@else if $font-type=='bold' {
+		font-family: "NoeTextBold", serif;
+	}
+
+	@else if $font-type=='semibold' {
+		font-family: "NoeTextSemiBold", serif;
+	}
+
+	@else {
+		font-family: "NoeText", serif;
+	}
+
+  @if $font-type!='italic' {
+    font-weight: font-weights($font-type);
+  }
+}
+
+@mixin GraphikWeb($font-type: 'regular') {
+	@if $font-type=='bold' {
+		font-family: "GraphikWebBold", sans-serif;
+  }
+
+  @else if $font-type=='semibold' {
+		font-family: "GraphikWebSemiBold", sans-serif;
+  }
+
+	@else if $font-type=='medium' {
+		font-family: "GraphikWebMedium", sans-serif;
+  }
+
+  @else if $font-type=='italic' {
+    font-family: "GraphikWebItalic", sans-serif;
+    font-style: italic;
+	}
+
+	@else {
+		font-family: "GraphikWebRegular", sans-serif;
+  }
+
+  @if $font-type!='italic' {
+    font-weight: font-weights($font-type);
+  }
+}
+
+
+//-----------------------------------------------------------------------
+//  BREAKPOINTS
+//  usage:
+//    @include breakpoint($width) {
+//      ...your styles here
+//    }
+//-----------------------------------------------------------------------
+
+// USING: $breakpoints_keyless: (0, 750px, 1280px, 1440px);
+@mixin breakpoint($breakpoint) {
+	@if map-has-key($breakpoints, $breakpoint) {
+		@media (min-width: #{map-get($breakpoints, $breakpoint)}) {
+			@content;
+		}
+	}
+
+	@else {
+		@media (min-width: $breakpoint) {
+			@content;
+		}
+	}
+}
+
+@mixin tablet {
+	@include breakpoint($tablet) {
+		@content;
+	}
+}
+
+@mixin desktop {
+	@include breakpoint($desktop) {
+		@content;
+	}
+}
+
+@mixin wide {
+	@include breakpoint($wide) {
+		@content;
+	}
+}
+
+/*---------------------------------------------------------------*\
+  RESPONSIVE PROPERTY HANDLER
+    handles the per-breakpoint property for mobile-first approach
+    note: requires a key-less 'breakpoints' scss map
+          e.g. $breakpoints_keyless: ( 320px, 760px, 1080px, 1280px );
+    usage:
+      @include respond((
+        display: flex,
+        margin: (2px, 3px, 4px, 5px),
+        padding: (3rem, 4rem, 5rem, 6rem),
+        flex: ("0 1 50%", null, (1 1 100%))
+      ));
+\*---------------------------------------------------------------*/
+
+@mixin respond($args) {
+	@for $bp from 1 through length($breakpoints_keyless) {
+
+		// loop through all the breakpoints
+		@media screen and (min-width: #{nth($breakpoints_keyless, $bp)}) {
+
+			// set media query
+			@each $propname,
+			$propvalues in $args {
+
+				// loop through all the properties
+				@if $bp <=length($propvalues) {
+					// check if the number of values is less than the number of breakpoints
+					$value: unquote(#{nth($propvalues, $bp)});
+
+					@if ($propname !=null) {
+						#{$propname}: $value; // apply value to the property
+					}
+				}
+			}
+		}
+	}
+}
+
+//-----------------------------------------------------------------------
+//  ASPECT-RATIO
+//  usage:
+//    @include aspect-ratio($width, $height)
+//-----------------------------------------------------------------------
+@mixin aspect-ratio($width, $height) {
+	position: relative;
+
+	&::before {
+		display: block;
+		content: "";
+		width: 100%;
+		padding-top: ($height / $width) * 100%;
+	}
+
+	>* {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		margin: auto;
+		overflow: hidden;
+	}
+}
+
+//-----------------------------------------------------------------------
+//  MAIN BUTTONS STATES
+//  usage:
+//    @include states($hover, $active)
+//-----------------------------------------------------------------------
+@mixin states($hover, $active) {
+	&:hover {
+		background-color: $hover;
+	}
+
+	&:active {
+		border: solid 2px $active;
+		background-color: $active;
+	}
+}
+
+
+/// Mixin - Font Styling
+/// provides font size, line height and letter spacing styling all in one
+/// usage: @include font([fontsize]px [lineheight]px/normal [letterspacing]px);
+@mixin font($settings) {
+	@if length($settings) > 0 and type-of(nth($settings, 1)) == number {
+	  font-size: nth($settings, 1) + px;
+	  font-size: rem(nth($settings, 1));
+	}
+
+	@if length($settings) > 1 {
+	  @if type-of(nth($settings, 2)) == number {
+		line-height: nth($settings, 2) + px;
+		line-height: rem(nth($settings, 2));
+	  }
+
+	  @else {
+		line-height: nth($settings, 2);
+	  }
+	}
+
+	@if length($settings) > 2 and type-of(nth($settings, 3)) == number {
+	  letter-spacing: rem(nth($settings, 3));
+	}
+}
+
+/*---------------------------------------------------------------*\
+  FadeY
+    handle FadeUp Animation of an object
+    usage:
+      @include fadeY(10, 1s, 0.25s, false, 'section-is-visible')
+    args:
+      $yValue = Starting Y axis of the element
+      $duration = Duration of the Transition
+      $delay = Add delay on the transition (default = 0)
+      $atRoot = Target the CSS class on main section div or the row (if the transition does not work)
+      $customVisibleClass = Custom "is-visible" Class
+\*---------------------------------------------------------------*/
+
+@mixin fadeY($yValue, $duration, $delay: 0, $atRoot: false, $customVisibleClass: 'section-is-visible', $easing: ease-in) {
+  transform: translateY(#{$yValue}px);
+  transition: transform $duration #{$easing},
+              opacity $duration #{$easing};
+  opacity: 0;
+
+  @if $atRoot == true {
+    @at-root {
+      .#{$customVisibleClass}#{&} {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  }
+
+  @else {
+    .#{$customVisibleClass} & {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @if $delay != null and $delay != '' and $delay != 0 {
+    transition-delay: $delay;
+  }
+}
+
+/*---------------------------------------------------------------*\
+  FadeX
+    handle FadeUp Animation of an object
+    usage:
+      @include fadeX(10, 1s, 0.25s, false, 'section-is-visible')
+    args:
+      $yValue = Starting X axis of the element
+      $duration = Duration of the Transition
+      $delay = Add delay on the transition (default = 0)
+      $atRoot = Target the CSS class on main section div or the row (if the transition does not work)
+      $customVisibleClass = Custom "is-visible" Class
+      $easing = Easing of the transition
+\*---------------------------------------------------------------*/
+
+@mixin fadeX($yValue, $duration, $delay: 0, $atRoot: false, $customVisibleClass: 'section-is-visible', $easing: ease-in) {
+  transform: translateX(#{$yValue}px);
+  transition: transform $duration #{$easing},
+              opacity $duration  #{$easing};
+  opacity: 0;
+
+  @if $atRoot == true {
+    @at-root {
+      .#{$customVisibleClass}#{&} {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+  }
+
+  @else {
+    .#{$customVisibleClass} & {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @if $delay != null and $delay != '' and $delay != 0 {
+    transition-delay: $delay;
+  }
+}
+
+
+/*---------------------------------------------------------------*\
+  FadeIn
+    handle FadeIn Animation of an object
+    usage:
+      @include fadeIn(1s, 0.25s, false)
+    args:
+      $duration = Duration of the Transition
+      $delay = Add delay on the transition (default = 0)
+      $atRoot = Target the CSS class on main section div or the row (if the transition does not work)
+      $customVisibleClass = Custom "is-visible" Class
+\*---------------------------------------------------------------*/
+
+@mixin fadeIn($duration, $delay: 0, $atRoot: false, $customVisibleClass: 'section-is-visible') {
+  transition: opacity $duration ease-in-out;
+  opacity: 0;
+
+  @if $atRoot == true {
+    @at-root {
+      .#{$customVisibleClass}#{&} {
+       opacity: 1;
+      }
+    }
+  }
+
+  @else {
+    .#{$customVisibleClass} & {
+      opacity: 1;
+    }
+  }
+
+  @if $delay != null and $delay != '' and $delay != 0 {
+    transition-delay: $delay;
+  }
+}
+
+@mixin transitionDelay($delay: 0s) {
+  transition-delay: $delay;
+}

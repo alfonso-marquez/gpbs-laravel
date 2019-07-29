@@ -23,6 +23,10 @@ Route::get('/alp', function () {
     return view('alp');
 });
 
+Route::get('/orderform', function () {
+    return view('consultation');
+});
+
 Route::get('/consultation', function () {
     return view('consultation');
 });

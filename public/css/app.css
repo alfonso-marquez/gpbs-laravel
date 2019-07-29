@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);@import url(https://fonts.googleapis.com/css?family=Michroma|Montserrat&display=swap);@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Nunito);@import url(https://fonts.googleapis.com/css?family=Michroma|Montserrat|Roboto+Slab&display=swap);@charset "UTF-8";
 
 /*!
  *  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome
@@ -19495,6 +19495,61 @@ readers do not read off random characters that represent icons */
   display: block;
 }
 
+/* Font helper mixins */
+
+/*---------------------------------------------------------------*\
+  RESPONSIVE PROPERTY HANDLER
+    handles the per-breakpoint property for mobile-first approach
+    note: requires a key-less 'breakpoints' scss map
+          e.g. $breakpoints_keyless: ( 320px, 760px, 1080px, 1280px );
+    usage:
+      @include respond((
+        display: flex,
+        margin: (2px, 3px, 4px, 5px),
+        padding: (3rem, 4rem, 5rem, 6rem),
+        flex: ("0 1 50%", null, (1 1 100%))
+      ));
+\*---------------------------------------------------------------*/
+
+/*---------------------------------------------------------------*\
+  FadeY
+    handle FadeUp Animation of an object
+    usage:
+      @include fadeY(10, 1s, 0.25s, false, 'section-is-visible')
+    args:
+      $yValue = Starting Y axis of the element
+      $duration = Duration of the Transition
+      $delay = Add delay on the transition (default = 0)
+      $atRoot = Target the CSS class on main section div or the row (if the transition does not work)
+      $customVisibleClass = Custom "is-visible" Class
+\*---------------------------------------------------------------*/
+
+/*---------------------------------------------------------------*\
+  FadeX
+    handle FadeUp Animation of an object
+    usage:
+      @include fadeX(10, 1s, 0.25s, false, 'section-is-visible')
+    args:
+      $yValue = Starting X axis of the element
+      $duration = Duration of the Transition
+      $delay = Add delay on the transition (default = 0)
+      $atRoot = Target the CSS class on main section div or the row (if the transition does not work)
+      $customVisibleClass = Custom "is-visible" Class
+      $easing = Easing of the transition
+\*---------------------------------------------------------------*/
+
+/*---------------------------------------------------------------*\
+  FadeIn
+    handle FadeIn Animation of an object
+    usage:
+      @include fadeIn(1s, 0.25s, false)
+    args:
+      $duration = Duration of the Transition
+      $delay = Add delay on the transition (default = 0)
+      $atRoot = Target the CSS class on main section div or the row (if the transition does not work)
+      $customVisibleClass = Custom "is-visible" Class
+\*---------------------------------------------------------------*/
+
 .header__bg {
   width: 100%;
   height: 100vh;
@@ -19567,6 +19622,7 @@ readers do not read off random characters that represent icons */
 }
 
 .about__content {
+  padding-top: 80px;
   display: flex;
   flex-direction: column;
   width: 75%;
@@ -19627,6 +19683,7 @@ readers do not read off random characters that represent icons */
 }
 
 .products__content {
+  padding-top: 80px;
   display: flex;
   flex-direction: column;
   width: 75%;
@@ -19654,7 +19711,29 @@ readers do not read off random characters that represent icons */
 }
 
 .products__main {
+  padding-top: 30px;
   display: flex;
+  flex: 1;
+}
+
+.products__main h4 {
+  font-size: 18px;
+  font-family: "Montserrat", serif;
+  font-weight: 700;
+  color: #1E2857;
+}
+
+.products__main span {
+  margin-bottom: 15px;
+  color: #1E2857;
+}
+
+.products__main a {
+  text-decoration: none;
+}
+
+.products__main p {
+  font-size: 14px;
 }
 
 .products__nmb {
@@ -19677,6 +19756,7 @@ readers do not read off random characters that represent icons */
 }
 
 .portfolio__content {
+  padding-top: 40px;
   display: flex;
   flex-direction: column;
   width: 75%;
@@ -19695,12 +19775,28 @@ readers do not read off random characters that represent icons */
 
 .portfolio__media {
   display: flex;
-  height: 266px;
-  flex: 1;
+}
+
+@media screen and (min-width: 0) {
+  .portfolio__media {
+    height: 100px;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .portfolio__media {
+    height: 166px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .portfolio__media {
+    height: 266px;
+  }
 }
 
 .portfolio__media picture:first-child {
-  padding-right: 50px;
+  margin-right: 40px;
 }
 
 .portfolio__media picture {
@@ -19713,5 +19809,13 @@ readers do not read off random characters that represent icons */
   width: 100%;
   -o-object-fit: cover;
      object-fit: cover;
+}
+
+.navbar {
+  background-color: #1E2857;
+}
+
+.navbar-brand {
+  height: 100%;
 }
 

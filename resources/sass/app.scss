@@ -1,7 +1,7 @@
 	@import "node_modules/font-awesome/scss/font-awesome.scss";
 // Fonts
 	@import url('https://fonts.googleapis.com/css?family=Nunito');
-	@import url('https://fonts.googleapis.com/css?family=Michroma|Montserrat&display=swap');
+	@import url('https://fonts.googleapis.com/css?family=Michroma|Montserrat|Roboto+Slab&display=swap');
 
 // Variables
 @import 'variables';
@@ -17,8 +17,9 @@ $fa-font-path: "../webfonts";
 
 // Custom
 @import 'custom';
-
+@import 'mixins';
 @import 'header';
 @import 'about';
 @import 'products';
 @import 'portfolio';
+@import 'navbar';

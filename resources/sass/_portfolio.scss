@@ -4,6 +4,7 @@
 	justify-content: center;
 
 	&__content  {
+		padding-top:40px;
 		display: flex;
 		flex-direction: column;
 		width: 75%;
@@ -23,10 +24,11 @@
 
 	&__media  {
 		display: flex;
-		height: 266px;
-		flex: 1;
+		@include respond ((
+		height: (100px, 166px, 266px)
+		));
 		picture:first-child {
-			padding-right: 50px;
+			margin-right: 40px;
 		}
 
 		picture {

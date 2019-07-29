@@ -8,6 +8,8 @@
 <body>
 	@if(Request::is('/'))
 	@include('inc.navbar')
+	@else
+	@include('inc.subnavbar')
 	@endif
 
 	@yield('content')
@@ -59,4 +61,6 @@
 </footer>
 
 </body>
+
+<script src="{{ asset('js/app.js') }}"></script>
 </html>

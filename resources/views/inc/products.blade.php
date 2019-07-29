@@ -1,4 +1,4 @@
-<section class="products">
+<section class="products" id="products">
 	<div class="products__content">
 		<div class="products__title"> 
 		<h2>Products &amp; Services</h2>
